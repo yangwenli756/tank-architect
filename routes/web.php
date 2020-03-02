@@ -32,4 +32,11 @@ Route::get('/brand/index','Index\BrandController@index');
 Route::get('/brand/destroy/{id}','Index\BrandController@destroy');
 Route::get('/brand/edit/{id}','Index\BrandController@edit');
 Route::post('/brand/update/{id}','Index\BrandController@update');
+//用户表
+Route::get('/shop_login/create','Shop_loginController@create');
+Route::post('/shop_login/store','Shop_loginController@store');
+Route::get('/shop_login/index','Shop_loginController@index');
+Route::get('/shop_login/edit/{id}','Shop_loginController@edit');
+Route::post('/shop_login/update/{id}','Shop_loginController@update');
+Route::get('/shop_login/destroy/{id}','Shop_loginController@destroy');
 
