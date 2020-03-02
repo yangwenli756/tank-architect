@@ -36,7 +36,7 @@ class GoodsController extends Controller
     public function index()
     {
         $pageSize = config('app.pageSize');
-        $data = goods::leftjoin('brand', 'goods.brand_id', '=', 'brand.brand_id')
+        $data = goods::leftjoin('shop_brand', 'goods.brand_id', '=', 'shop_brand.brand_id')
                         ->leftjoin('category', 'goods.cate_id', '=', 'category.cate_id')
                         ->orderby('goods_id', 'desc')
                         ->paginate($pageSize);
