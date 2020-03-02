@@ -48,7 +48,7 @@
   			<select name="brand_id" id="" class="col-sm-2 control-label">
                 <option value="">--请选择--</option>
                 @foreach($brandInfo as $v)
-                <option value="{{$v->brand_id}}">{{$v->brand_name}}</option>
+                <option value="{{$v->brand_id}}" @if($v->brand_id==$user->brand_id) selected="selected" @endif>{{$v->brand_name}}</option>
                 @endforeach
             </select>
   		</td>
@@ -59,7 +59,7 @@
   			<select name="cate_id" id="" class="col-sm-2 control-label">
                 <option value="">--请选择--</option>
                 @foreach($cateInfo as $vv)
-                <option value="{{$vv->cate_id}}">{{str_repeat('|--', $vv->level)}}{{$vv->cate_name}}</option>
+                <option value="{{$vv->cate_id}}"  @if($v->cate_id==$user->cate_id) selected="selected" @endif>{{str_repeat('|--', $vv->level)}}{{$vv->cate_name}}</option>
                 @endforeach
             </select>
 

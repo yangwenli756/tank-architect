@@ -10,6 +10,24 @@ use App\Category;
 
 class GoodsController extends Controller
 {
+
+    /*
+    无限极分类
+     */
+    function createTree($data,$p_id=0,$level=1){
+        static $arr=[];
+        if (!$data) {
+            return;
+        }
+        foreach ($data as $k=>$v) {
+            if ($v->p_id==$p_id) {
+                $v->level=$level;
+                $arr[]=$v;
+                $this->createTree($data,$v->cate_id,$level+1);
+            }
+        }
+        return $arr;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,12 +40,15 @@ class GoodsController extends Controller
                         ->leftjoin('category', 'goods.cate_id', '=', 'category.cate_id')
                         ->orderby('goods_id', 'desc')
                         ->paginate($pageSize);
+
             foreach($data as $v){
-                if($v->goods_img){
-                  $v->goods_img = explode('|',$v->goods_img);
+                if($v->goods_imgs){
+                  $v->goods_imgs = explode('|',$v->goods_imgs);
                 }
+                //dd($v->goods_imgs);
 
             }
+           
         return view('goods.index', ['data'=>$data]);
     }
 
@@ -40,7 +61,7 @@ class GoodsController extends Controller
     {
         $brandInfo=Brand::all();
         $cateInfo=Category::all();
-        //$cateInfo=createTree($cateInfo);
+        $cateInfo=$this->createTree($cateInfo);
         return view('goods/create',['brandInfo'=>$brandInfo,'cateInfo'=>$cateInfo]);
     }
 
@@ -69,7 +90,8 @@ class GoodsController extends Controller
             $data['goods_imgs']=implode('|',$photos);
         }
 
-        //dd($data['goods_imgs']);
+        
+        //dd($data);
         
         $res=Goods::insert($data);
         //dd($data);
@@ -133,6 +155,7 @@ class GoodsController extends Controller
         $user=Goods::find($id);
         $brandInfo=Brand::all();
         $cateInfo=Category::all();
+        $cateInfo=$this->createTree($cateInfo);
         return view('goods/edit',['user'=>$user,'brandInfo'=>$brandInfo,'cateInfo'=>$cateInfo]);
     }
 

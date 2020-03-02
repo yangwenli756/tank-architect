@@ -33,7 +33,7 @@
             <th>{{$v->goods_name}}</th>
             <th>{{$v->goods_no}}</th>
             <th>{{$v->goods_price}}</th>
-            <th></th>
+            <th><img src="{{env('UPLOAD_URL')}}{{$v->goods_img}}" width="40"></th>
             <th>
                 @if(is_array($v->goods_imgs))
                     @foreach($v->goods_imgs as $vv)
