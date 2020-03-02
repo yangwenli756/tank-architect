@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Goods;
-use App\Brand;
+use App\Index\Brand;
 use App\Category;
 
 class GoodsController extends Controller
@@ -36,7 +36,7 @@ class GoodsController extends Controller
     public function index()
     {
         $pageSize = config('app.pageSize');
-        $data = goods::leftjoin('brand', 'goods.brand_id', '=', 'brand.brand_id')
+        $data = goods::leftjoin('shop_brand', 'goods.brand_id', '=', 'shop_brand.brand_id')
                         ->leftjoin('category', 'goods.cate_id', '=', 'category.cate_id')
                         ->orderby('goods_id', 'desc')
                         ->paginate($pageSize);
