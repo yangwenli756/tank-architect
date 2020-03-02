@@ -13,8 +13,18 @@ class BrandController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $brand_url  =   request()->brand_url??'';
+        $brand_name =   request()->brand_name??'';
+        $where=[];
+        if ($brand_name) {
+            $where[]=['brand_name','like',"%$brand_name%"];
+        }
+        if ($brand_url) {
+            $where[]=['brand_url','=',$brand_url];
+        }
+        $brand  =   Brand::where($where)->paginate(3);
+        return view('index/brand/index',['brand'=>$brand,'brand_url'=>$brand_url,'brand_name'=>$brand_name]);
     }
 
     /**
@@ -42,7 +52,10 @@ class BrandController extends Controller
         }
         // dd($data);
         $res    =  Brand::insert($data);
-        dd($res);
+        // dd($res);
+        if ($res) {
+            return redirect('brand/index');
+        }
     }
     //封装文件上传
     public function upload($filename){
@@ -72,7 +85,10 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $res    =   Brand::where('brand_id',$id)->first();
+        if ($res) {
+            return view('index/brand/edit',['res'=>$res]);
+        }
     }
 
     /**
@@ -84,7 +100,16 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // echo 1;
+        $data   =   request()->except('_token');
+        // dd($data);
+        if ($request->hasFile('brand_logo')) {
+            $data['brand_logo'] =   $this->upload('brand_logo');
+        }
+        $res    =   Brand::where('brand_id',$id)->update($data);
+        if ($res!==false) {
+            return redirect('brand/index');
+        }
     }
 
     /**
@@ -95,6 +120,10 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // echo 1;
+        $res    =   Brand::where('brand_id',$id)->delete();
+        if ($res) {
+            return redirect('brand/index');
+        }
     }
 }

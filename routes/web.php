@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::get('/brand/insert','Index\BrandController@create');
 Route::post('/brand/store','Index\BrandController@store');
 Route::get('/brand/index','Index\BrandController@index');
+Route::get('/brand/destroy/{id}','Index\BrandController@destroy');
+Route::get('/brand/edit/{id}','Index\BrandController@edit');
+Route::post('/brand/update/{id}','Index\BrandController@update');
