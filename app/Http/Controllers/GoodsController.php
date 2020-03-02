@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Goods;
-use App\Brand;
+use App\Index\Brand;
 use App\Category;
 
 class GoodsController extends Controller
