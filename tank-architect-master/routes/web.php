@@ -14,12 +14,3 @@
 Route::get('/', function () {
     return view('welcome');
 });
-//good表的增删改查
-Route::prefix('goods')->group(function(){
-	Route::get('create','GoodsController@create');
-	Route::post('store','GoodsController@store');
-	Route::get('index','GoodsController@index');
-	Route::get('edit/{id}','GoodsController@edit');
-	Route::post('update/{id}','GoodsController@update');
-	Route::get('destroy/{id}','GoodsController@destroy');
-});
